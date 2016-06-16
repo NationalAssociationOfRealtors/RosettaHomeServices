@@ -7,11 +7,11 @@ mongodata:
 mongodb:
     image: mongo:2.6
     hostname: mongodb
-    command: "--dbpath=/mongo/data"
+#    command: "--dbpath=/mongo/data"
     expose:
         - "27017"
-    volumes_from:
-        - mongodata
+#    volumes_from:
+#        - mongodata
 
 influxdata:
     image: tutum/influxdb
@@ -22,6 +22,9 @@ influxdata:
 influxdb:
     image: tutum/influxdb
     hostname: influxdb
+    ports:
+        - "8086:8086"
+        - "8083:8083"
     expose:
         - "8086"
         - "8083"
@@ -39,6 +42,7 @@ elasticdata:
 elasticsearch:
     image: elasticsearch:1.5
     hostname: elasticsearch
+
     expose:
         - "9200"
         - "9300"
@@ -58,6 +62,6 @@ rabbitmq:
     expose:
         - "5672"
     ports:
-        - "15672"
+        - "15672:15672"
     volumes_from:
         - rabbitdata
