@@ -1,0 +1,63 @@
+mongodata:
+    image: mongo:2.6
+    command: "true"
+    volumes:
+        - /nar/mongo:/mongo/data
+
+mongodb:
+    image: mongo:2.6
+    hostname: mongodb
+    command: "--dbpath=/mongo/data"
+    expose:
+        - "27017"
+    volumes_from:
+        - mongodata
+
+influxdata:
+    image: tutum/influxdb
+    command: "true"
+    volumes:
+        - /nar/influx:/data
+
+influxdb:
+    image: tutum/influxdb
+    hostname: influxdb
+    expose:
+        - "8086"
+        - "8083"
+    volumes_from:
+        - influxdata
+    environment:
+        INFLUXDB_VERSION: 0.12.0-1
+
+elasticdata:
+    image: elasticsearch:1.5
+    command: "true"
+    volumes:
+        - /nar/elasticsearch:/usr/share/elasticsearch/data
+
+elasticsearch:
+    image: elasticsearch:1.5
+    hostname: elasticsearch
+    expose:
+        - "9200"
+        - "9300"
+    volumes_from:
+        - elasticdata
+
+rabbitdata:
+    image: rabbitmq:3-management
+    command: "true"
+    volumes:
+        - /data/log
+        - /data/mnesia
+
+rabbitmq:
+    image: rabbitmq:3-management
+    hostname: rabbitmq
+    expose:
+        - "5672"
+    ports:
+        - "15672"
+    volumes_from:
+        - rabbitdata
