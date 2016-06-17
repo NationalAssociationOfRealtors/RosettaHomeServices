@@ -22,9 +22,7 @@ influxdata:
 influxdb:
     image: tutum/influxdb
     hostname: influxdb
-    ports:
-        - "8086:8086"
-        - "8083:8083"
+#    log_driver: "syslog"
     expose:
         - "8086"
         - "8083"
@@ -42,7 +40,7 @@ elasticdata:
 elasticsearch:
     image: elasticsearch:1.5
     hostname: elasticsearch
-
+#    log_driver: "syslog"
     expose:
         - "9200"
         - "9300"
@@ -59,6 +57,7 @@ rabbitdata:
 rabbitmq:
     image: rabbitmq:3-management
     hostname: rabbitmq
+#    log_driver: "syslog"
     expose:
         - "5672"
     ports:
